@@ -6,14 +6,17 @@
 
 ## Solution 1: 
 ```sql
-SELECT COUNT(DISTINCT species) AS tiger_types FROM taxonomy WHERE species
- LIKE '%tiger%' OR tax_string LIKE '%tiger%' OR tree_display_name LIKE '%tiger%'
- OR align_display_name LIKE '%tiger%';
+SELECT COUNT(DISTINCT species) AS tiger_types
+FROM taxonomy WHERE species LIKE '%tiger%'
+OR tax_string LIKE '%tiger%'
+OR tree_display_name LIKE '%tiger%'
+OR align_display_name LIKE '%tiger%';
 ```
  ![image](https://github.com/user-attachments/assets/70dcaf6c-f78f-4aa5-aaee-261f122d9186)
 
 ```sql
-SELECT ncbi_id FROM taxonomy WHERE species LIKE '%Panthera tigris sumatrae%';
+SELECT ncbi_id FROM taxonomy WHERE
+species LIKE '%Panthera tigris sumatrae%';
 ```
 
 ![image](https://github.com/user-attachments/assets/8c5fb8e3-7733-4abe-81a9-909d015994fb)
@@ -27,13 +30,21 @@ SELECT ncbi_id FROM taxonomy WHERE species LIKE '%Panthera tigris sumatrae%';
 
 ## Solution 3:
 ```sql
-SELECT tx.species, rs.length FROM rfamseq rs JOIN taxonomy tx ON rs.ncbi_id = tx.ncbi_id WHERE tx.species LIKE '%rice%' ORDER BY rs.length DESC 
+SELECT tx.species, rs.length FROM
+rfamseq rs JOIN taxonomy tx ON rs.ncbi_id = tx.ncbi_id
+WHERE tx.species LIKE '%rice%' ORDER BY rs.length DESC 
 LIMIT 1;
 ```
 
 ## Solution 4:
 ```sql
-SELECT f.rfam_acc, f.rfam_id, MAX(rs.length) AS max_length FROM family f JOIN full_region fr ON f.rfam_acc = fr.rfam_acc JOIN rfamseq rs ON fr.rfamseq_acc = rs.rfamseq_acc WHERE rs.length > 1000000 GROUP BY f.rfam_acc, f.rfam_id ORDER BY max_length DESC LIMIT 15 OFFSET 120;
+SELECT f.rfam_acc, f.rfam_id, MAX(rs.length) AS max_length
+FROM family f JOIN full_region fr
+ON f.rfam_acc = fr.rfam_acc JOIN rfamseq rs
+ON fr.rfamseq_acc = rs.rfamseq_acc
+WHERE rs.length > 1000000 GROUP BY f.rfam_acc, f.rfam_id
+ORDER BY max_length DESC
+LIMIT 15 OFFSET 120;
 ```
 ![image](https://github.com/user-attachments/assets/f0e81705-616e-44d4-902f-b7751687175c)
 
