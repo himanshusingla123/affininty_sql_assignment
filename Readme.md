@@ -32,7 +32,7 @@ species LIKE '%Panthera tigris sumatrae%';
 ```sql
 SELECT tx.species, rs.length FROM
 rfamseq rs JOIN taxonomy tx ON rs.ncbi_id = tx.ncbi_id
-WHERE tx.species LIKE '%Oryzeae%' ORDER BY rs.length DESC 
+WHERE t.tax_string LIKE '%Oryzeae%' ORDER BY rs.length DESC 
 LIMIT 1;
 ```
 
